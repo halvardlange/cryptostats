@@ -1,3 +1,5 @@
+#This script was made to update a geektool geeklet
+#To successfully use the script, you need two things - a shell, and a webpage for the geektool to display
 #!/usr/local/bin/python
 import plotly.offline as py
 import plotly.graph_objs as go
@@ -6,6 +8,7 @@ import math
 import pandas as pd
 import os
 
+#this was added because the geeklet kept not showing correctly, just let for future troubleshooting
 try:
     os.chdir('/Users/halvard/Documents/GeekToolScripts')
 except Exception as e:
@@ -15,10 +18,8 @@ data_raw = pd.read_json("https://api.coinmarketcap.com/v1/ticker/?limit=20")
 data = data_raw.sort_values('percent_change_24h',ascending = False)
 data['colors']=-data['percent_change_24h']
 
-#print data[['name','price_usd','percent_change_24h']]
-
 y_text = []
-for index, row in data.iterrows():    
+for index, row in data.iterrows():
     y_text.append(('{percent_change_24h:.2f} %').format(percent_change_24h=row['percent_change_24h']))
 
 trace1 = go.Bar(
@@ -40,10 +41,7 @@ layout = go.Layout(
     titlefont=dict(
         color='rgb(255, 255, 255)'),
     xaxis=dict(
-        #title='Coin',
         gridcolor='transparent',
-        #range=[-2, 6],
-        #type='log',
         tickcolor = 'rgb(255, 255, 255)',
         color = 'rgb(255, 255, 255)',
         tickwidth = 1.45,
@@ -55,11 +53,9 @@ layout = go.Layout(
         title='Percent Change (24h)',
         gridcolor='transparent',
         tickcolor = 'rgb(255, 255, 255)',
-        #type = 'log',
         color = 'rgb(255, 255, 255)',
         tickwidth = 1.45,
         showbackground = False,
-        #range=[2,12],
         zerolinewidth=0,
         ticklen=5,
         gridwidth=0,
